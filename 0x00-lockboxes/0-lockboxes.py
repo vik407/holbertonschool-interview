@@ -14,7 +14,6 @@ def canUnlockAll(boxes):
             return False
 
     founded_keys = [key for key in boxes[0]]
-    print("Init keys {}".format(founded_keys))
     # Get all the keys
     for box in boxes:
         if len(founded_keys) == 0:
@@ -25,16 +24,14 @@ def canUnlockAll(boxes):
                 for new_key in boxes[key]:
                     temp_key.append(new_key)
             for new_key in temp_key:
+                # Dont repeat founded keys
                 if new_key not in founded_keys:
                     founded_keys.append(new_key)
-    """
-    for index, item in enumerate():
-    print(index, item[index]);
-    """
-    for test_key in range(0, len(boxes) - 1):
-        print("Founded Keys {}".format(founded_keys))
-        print("Number on boxes {}".format(boxes))
-        if test_key not in founded_keys:
-            print("Test key {} -> Founded key {}".format(test_key, founded_keys))
-            return False
-    return True
+    print("Keys to test {}".format(founded_keys))
+    print("Boxes {}".format(boxes))
+    for try_open in boxes:
+        print("try open {} with {}".format(try_open, founded_keys))
+        if len(founded_keys) == len(try_open):
+            print("open")
+            return True
+        return False
