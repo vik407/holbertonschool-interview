@@ -2,7 +2,6 @@
 """ You have n number of locked boxes in front of you. Each box is numbered
 sequentially from 0 to n - 1 and each box may contain keys to the other boxes.
 """
-import json
 
 
 def canUnlockAll(boxes):
@@ -15,28 +14,17 @@ def canUnlockAll(boxes):
     if type(boxes) is not list:
         return False
 
-    unlocked = {'0': True}
-    # Get first box unlocked
-    for key in boxes[0]:
-        unlocked_key = '{}'.format(key)
-        unlocked[unlocked_key] = True
-
-    # Unlock them
-    for unlocked_key in list(unlocked.keys()):
-        key_pos = int(unlocked_key)
-        for key in boxes[key_pos]:
-            deeper_unlocked = '{}'.format(key)
-            unlocked[deeper_unlocked] = True
-
-    # Move through boxes
-    pos = 1
-    for box in boxes[1:]:
-        if str(pos) in list(unlocked.keys()):
-            for key in box:
-                unlocked['{}'.format(key)] = True
-        pos += 1
-
-    if len(boxes) > len(unlocked.keys()):
-        return False
-    else:
+    # Position on first box that is unlocked
+    unlocked = [0]
+    for n in unlocked:
+        # Move to the desired box
+        for key in boxes[n]:
+            # Try to open
+            if key not in unlocked and key < len(boxes):
+                # unlocked store the key
+                unlocked.append(key)
+    # Its all the boxes unlocked?
+    if len(unlocked) == len(boxes):
         return True
+    # Can't unlock all!
+    return False
