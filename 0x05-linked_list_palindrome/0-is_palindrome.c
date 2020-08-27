@@ -1,35 +1,70 @@
 #include "lists.h"
-#include <stdio.h>
+
 /**
- * is_palindrome - Write a function in C that checks if
- * a singly linked list is a palindrome.
- * @head: head to the linked list
- * Return: 0 if it is not a palindrome, 1 if it is a palindrome
+ * reverse_linked_list - reverses a linked list
+ * @head: double pointer to head of list
+ */
+void reverse_linked_list(listint_t **head)
+{
+	listint_t *prev = NULL, *current = *head, *next;
+
+	while (current)
+	{
+		next = current->next;
+		current->next = prev;
+		prev = current;
+		current = next;
+	}
+	*head = prev;
+}
+
+/**
+ * compare_lists - compares two linked lists
+ * @a: pointer to head of first list
+ * @b: pointer to head of second list
+ * Return: 1 if true, 0 if false
+ */
+int compare_lists(listint_t *a, listint_t *b)
+{
+	for (; a && b; a = a->next, b = b->next)
+		if (a->n != b->n)
+			return (0);
+	return (!a && !b);
+}
+
+/**
+ * is_palindrome - checks if a singly linked list is a palindrome
+ * @head: double pointer to head of list
+ * Return: 1 if true, 0 if false
  */
 int is_palindrome(listint_t **head)
 {
-	listint_t *_head;
-	int num_arr[3000];
-	int i = 0, j;
+	listint_t *slow = *head, *fast = *head, *prev = *head;
+	int res = 0;
 
-	if (!head || !(*head) || !((*head)->next))
+	if (!fast || !fast->next)
 		return (1);
-
-	_head = *head;
-
-	while (_head)
+	while (fast && fast->next)
 	{
-		num_arr[i] = _head->n;
-		i++;
-		_head = _head->next;
+		fast = fast->next->next;
+		prev = slow;
+		slow = slow->next;
 	}
-	i--;
-	for (j = 0; j < i; j++, i--)
+	if (fast)
 	{
-		if (num_arr[i] == num_arr[j])
-			continue;
-		else
-			return (0);
+		fast = slow;
+		slow = slow->next;
 	}
-	return (1);
+	prev->next = NULL;
+	reverse_linked_list(&slow);
+	res = compare_lists(*head, slow);
+	reverse_linked_list(&slow);
+	if (fast)
+	{
+		prev->next = fast;
+		fast->next = slow;
+	}
+	else
+		prev->next = slow;
+	return (res);
 }
