@@ -14,5 +14,8 @@ What you should learn from this project:
 
 ---
 
+## Reference from YouTube Video
+* **Coding Challenge** - [YouTube](https://www.youtube.com/watch?v=LG8ZK-rRkXo)
+
 ## Author
 * **Victor Hernandez** - [vik407](https://github.com/vik407)
