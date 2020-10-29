@@ -1,11 +1,10 @@
 #!/usr/bin/python3
-""" This is a module for N queens.
+""" This is a module for N queens NP problem.
 """
 
-
 if __name__ == '__main__':
+
     import sys
-    import copy
 
     if len(sys.argv) != 2:
         print("Usage: nqueens N")
@@ -19,79 +18,49 @@ if __name__ == '__main__':
         print("N must be at least 4")
         sys.exit(1)
 
-    def get_board(size):
-        """Returns an n by n board"""
-        board = [0] * size
-        for ix in range(size):
-            board[ix] = [0] * size
-        return board
+    def startSolve():
+        b = [[0 for j in range(size)] for i in range(size)]
+        checkRecursive(b, 0)
+        return
 
-    def print_solutions(solutions, size):
-        """Prints all the solutions in user friendly way
-        """
-        new = []
-        for sol in solutions:
-            tmp = []
-            for i, row in enumerate(sol):
-                inner = []
-                for j, num in enumerate(row):
-                    if num == 1:
-                        inner.append(j)
-                        inner.append(i)
-                tmp.append(inner)
-            new.append(tmp)
-        for ans in new:
-            print(ans)
+    def checkRecursive(b, c):
+        if (c == size):
+            solution(b)
+            return True
+        ret = False
+        for i in range(size):
+            if (checkPosition(b, i, c)):
+                b[i][c] = 1
+                ret = checkRecursive(b, c + 1) or ret
+                b[i][c] = 0
+        return ret
 
-    def is_safe(board, row, col, size):
-        """Check if it's safe to place a queen at board[x][y]
-        """
-
-        for iy in range(col):
-            if board[row][iy] == 1:
+    def checkPosition(b, r, c):
+        for i in range(c):
+            if (b[r][i]):
                 return False
-
-        ix, iy = row, col
-        while ix >= 0 and iy >= 0:
-            if board[ix][iy] == 1:
+        i = r
+        j = c
+        while i >= 0 and j >= 0:
+            if(b[i][j]):
                 return False
-            ix -= 1
-            iy -= 1
-
-        jx, jy = row, col
-        while jx < size and jy >= 0:
-            if board[jx][jy] == 1:
+            i = i - 1
+            j = j - 1
+        i = r
+        j = c
+        while j >= 0 and i < size:
+            if(b[i][j]):
                 return False
-            jx += 1
-            jy -= 1
-
+            i = i + 1
+            j = j - 1
         return True
 
-    def solve(board, col, size):
-        """Use backtracking to find all solutions
-        """
-        if col >= size:
-            return
-
+    def solution(b):
+        solve = []
         for i in range(size):
-            if is_safe(board, i, col, size):
-                board[i][col] = 1
-                if col == size - 1:
-                    add_solution(board)
-                    board[i][col] = 0
-                    return
-                solve(board, col + 1, size)
-                board[i][col] = 0
-
-    def add_solution(board):
-        """Saves the board state to the global variable 'solutions'
-        """
-        global solutions
-        saved_board = copy.deepcopy(board)
-        solutions.append(saved_board)
-
-    board = get_board(size)
-    solutions = []
-    solve(board, 0, size)
-
-    print_solutions(solutions, size)
+            for j in range(size):
+                if(b[i][j] is 1):
+                    solve.append([i, j])
+        print(solve)
+        solve.clear()
+    startSolve()
