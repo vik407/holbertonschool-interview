@@ -1,6 +1,6 @@
 #!/usr/bin/node
 
-import request from 'request';
+const request = require('request');
 
 const req = (arr, i) => {
   if (i === arr.length) return;
