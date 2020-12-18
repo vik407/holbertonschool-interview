@@ -24,7 +24,7 @@ def count_words(subreddit, word_list, res=defaultdict(int), after=None):
             c = Counter(t.get('data').get('title').lower().split(' '))
             for word in word_list:
                 if word.lower() in c:
-                    res[word] += c.get(word.lower())
+                    res[word.lower()] += c.get(word.lower())
         after = r.get('data').get('after')
         if after:
             return count_words(subreddit, word_list, res, after)
