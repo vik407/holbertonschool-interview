@@ -9,6 +9,7 @@
 List *add_node_begin(List **list, char *str)
 {
 	List *last, *node = NULL;
+
 	node = malloc(sizeof(List));
 
 	if (node == NULL)
