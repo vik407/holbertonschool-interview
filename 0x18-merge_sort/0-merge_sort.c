@@ -1,4 +1,5 @@
 #include "sort.h"
+
 /**
  * merge - merges two sorted arrays
  * @array: input array
@@ -32,6 +33,7 @@ void merge(int *array, int *inner, int start, int mid, int end)
 	printf("[Done]: ");
 	print_array(array + start, end - start);
 }
+
 /**
  * ms - merge sort helper
  * @array: input array
@@ -51,6 +53,7 @@ void ms(int *array, int *inner, int start, int end)
 		merge(array, inner, start, mid, end);
 	};
 }
+
 /**
  * merge_sort - sorts an array of integers in ascending order using
  * the Merge sort algorithm
