@@ -67,7 +67,7 @@ int binary_tree_is_avl(const binary_tree_t *tree)
 	diff = h_l > h_r ? h_l - h_r : h_r - h_l;
 
 	if (diff <= 1 &&  binary_tree_is_avl(tree->left) &&
-	    binary_tree_is_avl(tree->right))
+		binary_tree_is_avl(tree->right))
 		return (1);
 	return (0);
 }
